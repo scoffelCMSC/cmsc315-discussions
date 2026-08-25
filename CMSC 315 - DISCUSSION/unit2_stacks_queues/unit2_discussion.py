@@ -23,7 +23,7 @@ class Stack:
     def push(self, value):
         # TODO (Student): Add value to the stack.
         # Add a short comment explaining why this operation supports LIFO behavior.
-        #  This puts new values at the top of the stack.
+        #  This puts new values at the top of the stack, and that item becomes the last in.
         self.items.append(value)
 
     def pop(self):
@@ -58,6 +58,7 @@ class Queue:
     def enqueue(self, value):
         # TODO (Student): Add value to the back of the queue.
         # Add a short comment explaining why this operation supports FIFO behavior.
+        # The newest item is added to the back of the queue, allowing the first item to be removed.
         self.items.append(value)
 
     def dequeue(self):
@@ -69,7 +70,8 @@ class Queue:
 
     def front(self):
         # TODO (Student): Return the front value without removing it.
-        # Add a comment explaining what front returns.
+        # If the front is empty, it will return nothing.
+        # If the front has an item, it will return the item at the front of the queue without removing it.
         if self.is_empty():
             return None
         return self.items[0]
