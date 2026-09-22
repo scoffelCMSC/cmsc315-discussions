@@ -34,6 +34,19 @@ def main():
 
     print("\n=== INSERT OPERATIONS ===")
     print("TODO: Create a dictionary and add multiple key-value pairs.")
+    # Create the empty dictionary. Weapon list with their IDs.
+    weapons = {}
+    # The weapon name is our key, as a string, and our weapon IDs are integers. 
+    weapons["Alethonym"] = 1001588
+    weapons["Polaris Lance"] = 1000323
+    weapons["Lord of Wolves"] = 1000045
+    weapons["Divinity"] = 1001223
+    weapons["Choir of One"] = 1001704
+
+    # Python dictionaries are innately implemented using a hash map
+
+    for key in weapons:
+        print(f"Weapons: {key}: {weapons[key]}")
 
     # ===============================
     # TODO (Student): LOOKUP OPERATIONS
@@ -47,6 +60,14 @@ def main():
     print("\n=== LOOKUP OPERATIONS ===")
     print("TODO: Demonstrate successful key lookups.")
 
+    # A lookup converts the key into a hash to make the lookup speed only O(1).
+    # It uses the hash to determine a location and then performs the comparison.
+    weapon_list = ["Divinity", "Polaris Lance"]
+
+    for weapon in weapon_list:
+        print(f"{weapon} has the ID of {weapons[weapon]}")
+
+
     # ===============================
     # TODO (Student): UPDATE OPERATIONS
     # ===============================
@@ -59,6 +80,12 @@ def main():
 
     print("\n=== UPDATE OPERATIONS ===")
     print("TODO: Demonstrate updating an existing key.")
+    # Creating and updating a key use the same operation since duplicate keys cannot exist. 
+    print(f"Weapon ID for test build: {weapons['Alethonym']}")
+    # Our new value is created.
+    weapons["Alethonym"] = 1000777
+    # The previous key is now overwritten by the new one.
+    print(f"Updated Weapon ID: {weapons['Alethonym']}")
 
     # ===============================
     # TODO (Student): DELETE OPERATIONS
@@ -71,6 +98,14 @@ def main():
 
     print("\n=== DELETE OPERATIONS ===")
     print("TODO: Demonstrate deleting a key-value pair.")
+
+    print(f"Weapon list, pre-deletion: {weapons}")
+    # Pop would save the value for later if we needed to see what we deleted.
+    # del would remove it permanently without an ability to reference to it.
+    weapons.pop("Divinity")
+    print(f"Weapons after deletion: {weapons}")
+    # Deleting a key-value pair removes both from the dictionary. 
+    # If the key is deleted from a map, the length of the map is decreased by 1.
 
     # ===============================
     # TODO (Student): EDGE CASES
@@ -89,6 +124,17 @@ def main():
     print("\n=== EDGE CASES ===")
     print("TODO: Demonstrate and explain edge cases.")
 
+    # Edge Case 1: Missing Key Lookup
+    # An error will occur, as the key cannot be found.
+    print("Edge Case 1: Missing Key Lookup")
+    print(f"Current Weapon List: {weapons}")
+    print(f"Weapon Lookup - Hierarchy of needs: {weapons['Hierarchy of Needs']}")
+
+    # Edge Case 2: Missing Key Update
+    # Updating the value for a missing key will add it to the list, as the operations are the same.
+    print(f"Current Weapon List: {weapons}")
+    weapons["Hierarchy of Needs"] = 1011059
+    print(f"New Weapons List: {weapons}")
 
 
 if __name__ == "__main__":
