@@ -32,8 +32,24 @@ def bfs(graph, start):
     - Why neighbors are added to the queue.
     - How BFS differs from depth-first traversal.
     """
+    # A queue is used here so that BFS can use the current node to reference its neighbors.
+    # Once a queued node is searched, it is removed from the queue and added to visited.
+    # Nodes that have already been visited in the queue will not be pulled up if not necessary.
+    if start not in graph:
+        return []
+    queue = deque([start])
+    visited = {start}
+    order = []
 
-    pass
+    # Neighbors are added to the back of the queue so they can be visited in the next level
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+        for neighbor in graph.get(node, []):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+    return order
 
 
 def main():
@@ -53,6 +69,20 @@ def main():
     print("\n=== GRAPH STRUCTURE ===")
     print("TODO: Create and display a graph.")
 
+    # The nodes represent individual quests which may be randomly selected as a starting point.
+    # Each edge represents which quests will be potentially unlocked next.
+    # Quest 1 can unlock QUest 2 and Quest 3, but not directly Quest 4.
+    graph = {
+        "Quest 1": ["Quest 2", "Quest 3"],
+        "Quest 2": ["Quest 1", "Quest 4", "Quest 5"],
+        "Quest 3": ["Quest 1", "Quest 4", "QUest 6"],
+        "Quest 4": ["Quest 2", "Quest 3", "Quest 6"],
+        "Quest 5": ["Quest 2", "Quest 6"],
+        "Quest 6": ["Quest 3", "Quest 4", "Quest 5"],
+    }
+    print("Quest Linking: ")
+    for node, neighbors in graph.items():
+        print(f"{node} : {neighbors}")
     # ===============================
     # TODO (Student): BFS TRAVERSAL
     # ===============================
@@ -67,6 +97,20 @@ def main():
 
     print("\n=== BFS TRAVERSAL ===")
     print("TODO: Perform and explain BFS traversal.")
+
+    # BFS takes advantage of our adjacent list by scanning all of its neighbors first for Level 1.
+    # The neighbors are then scanned for level 2, and then further on for subsequent levels.
+    start = "Quest 4"
+    bfs_traversal = bfs(graph, start)
+    print(f"Starting Quest: {start}")
+    print("BFS searches for nodes starting with the nearest neighbors.")
+    print(f"Order, starting from {start}: {bfs_traversal}")
+
+    graph["Quest 7"] = ["Quest 1", "Quest 3"]
+    graph["Quest 1"].append("Quest 7")
+    print(f"\nNew Quest Added.")
+    new_traversal = bfs(graph, start)
+    print(f"Updated Quests: {new_traversal}")
 
     # ===============================
     # TODO (Student): EDGE CASES
@@ -86,7 +130,16 @@ def main():
     print("\n=== EDGE CASE TESTS ===")
     print("TODO: Demonstrate and explain edge cases.")
 
+    print(f"\nEdge Case 1: Missing Start Node")
 
+    missing_start = bfs(graph, "Quest 0")
+    print(f"Quest Traversal: {missing_start}")
+    print("Since the start node was not present in the list, the result should be empty.")
+    
+    print(f"\nEdge Case 2: Empty Graph")
 
+    empty_graph = bfs({}, "Quest 1")
+    print(f"Quest Traversal: {empty_graph}")
+    print("Similarly, an empty list should be returned as there simply is no list.")
 if __name__ == "__main__":
     main()
